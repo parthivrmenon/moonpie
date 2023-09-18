@@ -1,12 +1,10 @@
-# Follow along for K8S course https://www.youtube.com/watch?v=X48VuDVv0do&t=157s
+# MoonPie
+Testing out waters on K8S...
 
-# setup
+## Pre-requisites
+https://minikube.sigs.k8s.io/docs/start/
+
+## Minikube
 minikube start
 minkube status - to ensure verythig started up fine
 
-
-
-
-
-# Pre-requisites
-https://minikube.sigs.k8s.io/docs/start/
