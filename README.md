@@ -5,6 +5,19 @@ Testing out waters on K8S...
 https://minikube.sigs.k8s.io/docs/start/
 
 ## Minikube
-minikube start
-minkube status - to ensure verythig started up fine
+```bash
+# Start minikube
+➜  minikube start
+
+# Ensure everything started up fine..
+➜  minikube status
+minikube
+type: Control Plane
+host: Running
+kubelet: Running
+apiserver: Running
+kubeconfig: Configured
+
+```
+
 
