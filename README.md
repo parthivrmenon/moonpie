@@ -4,13 +4,12 @@ A local k8s playground for your exploration!
 
 ## Setup (via Bootstap script) [experimental]
 ```bash
-chmod +x moonpie-up.sh 
-./moonpie-up.sh
+chmod +x moonpie.sh
+./moonpie.sh up
 ```
 ## To destroy
 ```bash
-chmod +x moonpie-down.sh
-./moonpie-down.sh
+./moonpie.sh down
 ```
 
 ## Setup manually [probably safer]
