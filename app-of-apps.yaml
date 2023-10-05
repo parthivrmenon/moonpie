@@ -2,10 +2,10 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: in-cluster
-  namespace: moonpie-argocd
+  namespace: argocd
 spec:
   destination:
-    namespace: moonpie-argocd
+    namespace: argocd
     server: https://kubernetes.default.svc
   project: default
   source:

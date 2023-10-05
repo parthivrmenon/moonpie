@@ -10,7 +10,7 @@ print_message() {
 # Check if command installed
 check_command_installed() {
   local command_name="$1"
-  
+  print_message "Checking if $command_name is installed."
   if command -v "$command_name" >/dev/null 2>&1; then
     print_message "$command_name is installed."
   else

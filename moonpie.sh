@@ -1,18 +1,17 @@
 #!/bin/bash
 
+set -euo pipefail
 source functions.sh
 
 # Do not change these.
-ARGO_CD_NAMESPACE="moonpie-argocd"
+ARGO_CD_NAMESPACE="argocd"
 APPS_NAMESPACE="moonpie-apps"
 INFRA_NAMESPACE="moonpie-infra"
 
-
 bootstrap_cluster() {
-    print_message "Bootstrapping moonpie..."
+    print_message "1 MoonPie coming up..."
     
     # Check if Minikube is installed
-    print_message "checking if minikube installed..."
     check_command_installed "minikube"
 
     # Check if Minikube is running
@@ -26,42 +25,56 @@ bootstrap_cluster() {
     fi
 
     # Check if kubectl is installed
-    print_message "checking if kubectl installed correctly.."
     check_command_installed "kubectl"
 
-    # Install argoCD
-    print_message "Installing argoCD"
-    print_message "Creating namespace $ARGO_CD_NAMESPACE"
-    kubectl create namespace $ARGO_CD_NAMESPACE > /dev/null
-    print_message "Deploying argocd"
+    # Create namespace for ArgoCD if it does not exist
+    create_namespace $ARGO_CD_NAMESPACE
+
+    # Deploy ArgoCD
     kubectl apply -n $ARGO_CD_NAMESPACE -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml >/dev/null
-    print_message "Default username is : admin"
-    default_password=`kubectl -n $ARGO_CD_NAMESPACE get secret argocd-initial-admin-secret  --template={{.data.password}} | base64 --decode`
-    print_message "Default password is : $default_password"
 
-    print_message "Setting context to argocd"
-    kubectl config set-context --current --namespace=$ARGO_CD_NAMESPACE
-    print_message "Deploying app of apps.."
-    kubectl apply -f app-of-apps.yaml
 
-    print_message "Creating namespace $APPS_NAMESPACE for applications."
-    kubectl create namespace $APPS_NAMESPACE > /dev/null
+    # Create NS for apps and infra
+    create_namespace $APPS_NAMESPACE
+    create_namespace $INFRA_NAMESPACE
 
-    print_message "Creating namespace $INFRA_NAMESPACE"
-    kubectl create namespace $INFRA_NAMESPACE > /dev/null
 }
+
+
 
 destroy_cluster() {
     print_message "Destroying moonpie..."
-    kubectl delete namespace ingress-nginx
-    kubectl delete namespace $ARGO_CD_NAMESPACE
-    kubectl delete namespace $APPS_NAMESPACE
-    kubectl delete namespace $INFRA_NAMESPACE
+    delete_namespace $ARGO_CD_NAMESPACE
+    delete_namespace $APPS_NAMESPACE
+    delete_namespace $INFRA_NAMESPACE
 
+}
+
+create_namespace() {
+    local ns="$1"
+    if ! (kubectl get namespace $ns > /dev/null); then 
+      print_message "Creating namespace $ns."
+      kubectl create namespace $ns > /dev/null
+    else
+      print_message "$ns already exists"
+    fi
 
 }
 
 
+delete_namespace() {
+  local ns="$1"
+    if  (kubectl get namespace $ns > /dev/null); then 
+      print_message "Deleting NS $ns"
+      kubectl delete namespace $ns > /dev/null
+    else
+      print_message "$ns does not exist. Nothing to be cleaned up."
+    fi
+
+}
+
+
+############# MAIN #############################
 # Check if the script is called with an argument
 if [ $# -ne 1 ]; then
   echo "Usage: $0 <action>"
@@ -86,4 +99,4 @@ case "$action" in
     ;;
 esac
 
-# Optionally, you can add error handling or additional steps as needed.
+

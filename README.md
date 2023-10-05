@@ -53,14 +53,7 @@ kubectl -n argocd get secret argocd-initial-admin-secret  --template={{.data.pas
 
 ```
 
-## App of Apps Pattern
-```bash
-# App of apps..
-kubectl config set-context --current --namespace=argocd
 
-kubectl apply -f app-of-apps.yaml
-
-```
 
 ## ArgoCD UI
 ```bash
@@ -69,6 +62,15 @@ kubectl apply -f app-of-apps.yaml
 
 # You can now access the argoCD UI at:
 https://127.0.0.1:8080/ 
+```
+
+
+## App of Apps Pattern
+```bash
+# App of apps..
+kubectl config set-context --current --namespace=argocd
+kubectl apply -f app-of-apps.yaml
+
 ```
 
 
