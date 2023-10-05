@@ -32,12 +32,14 @@ kubeconfig: Configured
 
 ## ArgoCD
 ```bash
-# Install ArgoCD
-kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+# Install ArgoCD and ArgoCD CLI
+➜ kubectl create namespace argocd
+➜ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+➜ brew install argocd
 
 # Port forward service argocd-server on 8080
-kubectl port-forward -n argocd svc/argocd-server 8080:443
+➜ kubectl port-forward -n argocd svc/argocd-server 8080:443
 
 # You can now access the argoCD UI at:
 https://127.0.0.1:8080/ 
@@ -51,6 +53,8 @@ kubectl -n argocd get secret argocd-initial-admin-secret  --template={{.data.pas
 ## App of Apps Pattern
 ```bash
 # App of apps..
+
+
 ```
 
 
