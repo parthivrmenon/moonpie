@@ -1,44 +1,20 @@
 # MoonPie
 A local k8s playground for your exploration!
 
-
 ## Setup (via Bootstap script) [experimental]
 ```bash
-chmod +x moonpie.sh
-./moonpie.sh up
+cd moonpie
+chmod +x moonpie-bootstrap.sh
+./moonpie-bootstrap.sh up
 ```
 ## To destroy
 ```bash
-./moonpie.sh down
+./moonpie-bootstrap.sh down
 ```
 
-## Setup manually [probably safer]
-
-* [Step 1: Install 'minikube' for your platform](https://minikube.sigs.k8s.io/docs/start/)
-* [Step 2: Start minikube](#minikube)
-* [Step 3: Install ArgoCD](#argocd)
-* [Step 4: App of Apps Pattern](#app-of-apps-pattern)
 
 
-## Minikube
-```bash
-# Start minikube and Enable Ingress
-➜  minikube start
-➜  minikube addons enable ingress
 
-# Ensure everything started up fine..
-➜  minikube status
-minikube
-type: Control Plane
-host: Running
-kubelet: Running
-apiserver: Running
-kubeconfig: Configured
-
-# Minikube includes kubectl
-➜  kubectl version
-
-```
 
 ## ArgoCD
 ```bash
