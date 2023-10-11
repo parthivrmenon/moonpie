@@ -6,6 +6,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/parthivrmenon/moonpie/cmd/bootstrap"
 	"github.com/spf13/cobra"
 )
 
@@ -34,7 +35,7 @@ func Execute() {
 }
 
 func addSubCommandPalettes() {
-	rootCmd.AddCommand(BootstrapCmd)
+	rootCmd.AddCommand(bootstrap.BootstrapCmd)
 
 }
 
