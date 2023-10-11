@@ -1,21 +1,24 @@
 # MoonPie
-A local k8s playground for your exploration!
+A micro developer platform running on k8s.
 
-## Setup (via Bootstap script) [experimental]
+## Setup
 ```bash
 cd moonpie
 chmod +x moonpie-bootstrap.sh
-./moonpie-bootstrap.sh up
+sudo ./moonpie-bootstrap.sh up
 ```
 ## To destroy
 ```bash
-./moonpie-bootstrap.sh down
+sudo ./moonpie-bootstrap.sh down
 ```
 
 
+## Infra
+```bash
+# Postgres
+moonpie-postgres.com:30100
 
-
-
+```
 ## ArgoCD
 ```bash
 # Install ArgoCD and ArgoCD CLI
@@ -48,6 +51,29 @@ kubectl config set-context --current --namespace=argocd
 kubectl apply -f app-of-apps.yaml
 
 ```
+
+## MoonPie Postgres
+```bash
+# apply postgres manifest
+kubectl -n moonpie-infra apply -f templates/postgres
+
+#
+kubectl -n moonpie-infra exec -it moonpie-postgres-879877b65-6mfbk -- psql -h localhost -U postgres --password -p 5432 postgres
+
+
+
+
+```
+
+## MoonPie MySQL
+```bash
+
+helm install moonpie-mysql oci://registry-1.docker.io/bitnamicharts/mysql
+
+```
+
+## Prometheus
+https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack
 
 
 

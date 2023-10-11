@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moonpie-pgadmin
+spec:
+  selector:
+   matchLabels:
+    app: moonpie-pgadmin
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: moonpie-pgadmin
+    spec:
+      containers:
+        - name: pgadmin4
+          image: dpage/pgadmin4
+          env:
+           - name: PGADMIN_DEFAULT_EMAIL
+             value: "admin@moonpie.com"
+           - name: PGADMIN_DEFAULT_PASSWORD
+             value: "moonpie"
+           - name: PGADMIN_PORT
+             value: "80"
+          ports:
+            - containerPort: 80
+              name: pgadminport
+
