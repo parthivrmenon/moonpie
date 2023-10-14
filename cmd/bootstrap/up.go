@@ -1,8 +1,7 @@
 /*
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-
 */
-package cmd
+package bootstrap
 
 import (
 	"fmt"
@@ -10,24 +9,33 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var (
+	team      string
+	namespace string
+)
+
 // upCmd represents the up command
 var upCmd = &cobra.Command{
 	Use:   "up",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Create MoonPie",
+	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("up called")
+		fmt.Println("up called with team", team)
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(upCmd)
+	upCmd.Flags().StringVarP(&team, "team", "t", "", "team name that owns the cluster")
+	upCmd.Flags().StringVarP(&namespace, "namespace", "n", "", "namespace for deployment")
+	if err := upCmd.MarkFlagRequired("team"); err != nil {
+		fmt.Println(err)
+	}
 
+	if err := upCmd.MarkFlagRequired("namespace"); err != nil {
+		fmt.Println(err)
+	}
+
+	BootstrapCmd.AddCommand(upCmd)
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
